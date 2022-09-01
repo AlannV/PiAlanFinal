@@ -1,0 +1,126 @@
+a {
+  text-decoration: none;
+}
+
+.home-main-container{
+  background-image: url("https://discountbuildingmaterial.com.au/wp-content/uploads/2021/02/Grass.jpg");
+  background-size: cover;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.nav {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+}
+
+.labels {
+  color: white;
+  font-weight: 900;
+  font-family: 'Trebuchet MS';
+  
+}
+
+.titles {
+  pointer-events: none;
+}
+
+.separador {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  
+  border-radius: 15px;
+  width: 10rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(250,250,0,0.5);
+  font-family: 'Trebuchet MS';
+  font-weight: 900;
+}
+
+.btn:hover {
+  background-color: rgba(250,250,0,1);
+  -webkit-transform:scale(1.3);transform:scale(1.25);
+}
+
+.reset-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.secondary-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.allBreeds{
+  
+}
+
+.select-style{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.select-style:hover{
+  
+  border-color:azure;
+}
+
+select{
+  width: 10rem;
+  height: 2rem;
+  border-radius: 15px;
+  background-color: rgba(250,250,0,0.5);
+  font-family: 'Trebuchet MS';
+  font-weight: 900;
+}
+/* 
+input{
+} */
+
+.temperaments{}
+
+.order{}
+
+.aZ{}
+
+.select-style{}
+
+.minMax{}
+
+.paginado-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginado{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.content-cards{
+  display: flex;
+  justify-content: center;  
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 80vw;
+}
