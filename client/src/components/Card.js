@@ -1,31 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Card.css";
+import { Link } from "react-router-dom";
 
 export default function Card({
   name,
   temperament,
+  height,
   weight,
-  image,
   life_span,
-  origin,
+  image,
   id,
 }) {
-  return (
-    <div key={id} className="card-container">
-      <div className="img-card-container">
-        <img
-          className="img-card-styles"
-          src={image}
-          height="200px"
-          width="270px"
-          alt=""
-        />
-      </div>
+  const [front, setFront] = useState("card-front");
 
-      <div className="data-breed">
-        <h2>{name}</h2>
-        <h5>{temperament}</h5>
-        <h5>Peso: {weight} kg</h5>
+  const [back, setBack] = useState("card-back");
+
+  function handleFlip() {
+    if (front === "card-front") {
+      setFront("card-front flipped");
+      setBack("card-back flipped");
+    } else {
+      setFront("card-front");
+      setBack("card-back");
+    }
+  }
+
+  return (
+    <div className="card-container">
+      <div className="card">
+        <div onClick={handleFlip} className={front}>
+          <p className="card-names">{name}</p>
+          <img
+            className="img-card-styles"
+            src={image}
+            height="200px"
+            width="270px"
+            alt=""
+          />
+        </div>
+
+        <div onClick={handleFlip} className={back}>
+          <p className="card-titles">Temperament: {temperament}</p>
+          <p className="card-titles">Weight: {weight} kg</p>
+          <p className="card-titles">Height: {height}</p>
+          <p className="card-titles">Life Span: {life_span}</p>
+          <Link to={"/home/" + id}>
+            <button>View More!</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -121,6 +121,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         breeds: sortWeight,
       };
+    case "GET_CLOUDINARY_IMG":
+      //console.log(action.payload)
+      return {
+        ...state,
+        productImg: action.payload,
+      };
 
     default:
       return state;

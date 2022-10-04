@@ -21,7 +21,7 @@ export default function SearchBar() {
   }
 
   return (
-    <div>
+    <div className="searchbar-main-container">
       <input
         type="text"
         placeholder="Search..."

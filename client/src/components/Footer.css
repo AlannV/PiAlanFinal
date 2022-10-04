@@ -1,0 +1,15 @@
+.footer-main-container{
+  background-color: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.git-container{
+  margin-right: 2rem;
+}
+
+.in-container{
+  margin-left: 2rem;
+}

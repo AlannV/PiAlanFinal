@@ -11,8 +11,6 @@
   
 } 
 
-
-
 .breed-sub-container{
 
 display: flex;
@@ -45,86 +43,10 @@ background-color: rgba(250,250,0,0.7);}
   margin-bottom: 1rem;
 }
 
-
-.btn {
-  
-  border-radius: 15px;
-  width: 10rem;
-  height: 2rem;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(250,250,0,0.5);
-  font-family: 'Trebuchet MS';
-  font-weight: 900;
-}
-
-.btn:hover {
-  background-color: rgba(250,250,0,1);
-  -webkit-transform:scale(1.3);transform:scale(1.25);
-}
-
-.reset-button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.select-style{
-  margin-left: 5px;
-  margin-right: 5px;
-  background-color: rgba(255, 255, 251, 0.9);
-}
-
-.select-style:hover{
-  
-  border-color:azure;
-}
-
-select{
-  width: 10rem;
-  height: 2rem;
-  border-radius: 15px;
-  background-color: rgba(250,250,0,0.5);
-  font-family: 'Trebuchet MS';
-  font-weight: 900;
-}
-
-
-.form__input {
-  border-radius: 15px;
-  width: 15rem;
-  height: 1.7rem;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 251, 0.9);
-  font-family: 'Trebuchet MS';
-  font-weight: 900;
-  text-align: center;
-}
-
-.form__input:hover {
-  border-color: white;
-}
-
 .delete-container{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
 
-}
-
-.delete-btn{
-  
-  width: 1rem;
-  height: 1rem;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(253, 247, 248, 0.979);
-  font-family: 'Trebuchet MS';
-  font-weight: 900;
-}
-
-ul {
 }

@@ -8,22 +8,22 @@ import {
   orderByBreed,
   orderByWeight,
 } from "../actions";
-import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
-import SearchBar from "./SearchBar";
 import "./Home.css";
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function Home() {
   const dispatch = useDispatch();
   const allBreeds = useSelector((state) => state.breeds);
   const [orden, setOrden] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [breedsPerPage, setBreedsPerPage] = useState(8);
+  const [breedsPerPage, setBreedsPerPage] = useState(12);
   const temperaments = useSelector((state) => state.temperaments);
   const [input, setInput] = useState("");
-  const indexOfLastBreed = currentPage * breedsPerPage; //8
-  const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; //0
+  const indexOfLastBreed = currentPage * breedsPerPage;
+  const indexOfFirstBreed = indexOfLastBreed - breedsPerPage;
   const currentBreeds = allBreeds.slice(indexOfFirstBreed, indexOfLastBreed);
 
   const paginado = (pageNumber) => {
@@ -70,87 +70,78 @@ export default function Home() {
 
   return (
     <div className="home-main-container">
-      <nav className="nav">
-        <Link to="/breed">
-          <button className="btn">Crear Raza</button>
-        </Link>
-
-        <div className="separador"></div>
-
-        <SearchBar />
-      </nav>
-
-      <div className="separador"></div>
-
-      <div className="secondary-container">
-        <div className="allBreeds">
-          <label className="labels">Filtrar razas por: </label>
-          <select
-            className="select-style"
-            onChange={(e) => handleFilterCreatedDb(e)}
-          >
-            <option value="all">Existente</option>
-            <option value="createdInDb">Creado</option>
-          </select>
-        </div>
-
-        <div className="temperaments">
-          <label className="labels">Temperamento: </label>
-          <select className="select-style" onChange={(e) => handleSelect(e)}>
-            {temperaments?.map((temp) => {
-              return (
-                <option key={temp.name} value={temp.name}>
-                  {temp.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-
-        <div className="aZ">
-          <label className="labels">Ordenar alfabeticamente: </label>
-          <select
-            className="select-style"
-            onChange={(e) => {
-              handleOrderByBreed(e);
-            }}
-          >
-            <option value="asc"> A - Z </option>
-            <option value="des"> Z - A </option>
-          </select>
-        </div>
-
-        <div className="minMax">
-          <label className="labels">Ordenar por peso:</label>
-          <select
-            className="select-style"
-            onChange={(e) => {
-              handleOrderByWeight(e);
-            }}
-          >
-            <option value="minToMax">De mayor a menor peso</option>
-            <option value="maxToMin">De menor a mayor peso</option>
-          </select>
-        </div>
+      <div className="nav">
+        <Header />
       </div>
 
-      <div className="separador"></div>
+      <div className="home-sub-container">
+        <div className="upper-side">
+          <>
+            <label className="labels">Breeds per page: </label>
+            <select
+              className="select-style"
+              onChange={(e) => setBreedsPerPage(e.target.value)}
+            >
+              <option value="12">12</option>
+              <option value="24">24</option>
+              <option value="36">36</option>
+              <option value="48">48</option>
+              <option value="60">60</option>
+            </select>
+          </>
+          <>
+            <label className="labels">Filter by: </label>
+            <select
+              className="select-style"
+              onChange={(e) => handleFilterCreatedDb(e)}
+            >
+              <option value="all">Existent</option>
+              <option value="createdInDb">Created</option>
+            </select>
+            <label className="labels">Temperament: </label>
+            <select className="select-style" onChange={(e) => handleSelect(e)}>
+              {temperaments?.map((temp) => {
+                return (
+                  <option key={temp.name} value={temp.name}>
+                    {temp.name}
+                  </option>
+                );
+              })}
+            </select>
 
-      <div className="reset-button">
-        <br />
-        <button
-          className="btn"
-          onClick={(e) => {
-            handleClick(e);
-          }}
-        >
-          Reset
-        </button>
-      </div>
+            <label className="labels">Order alphabetically: </label>
+            <select
+              className="select-style"
+              onChange={(e) => {
+                handleOrderByBreed(e);
+              }}
+            >
+              <option value="asc"> A - Z </option>
+              <option value="des"> Z - A </option>
+            </select>
 
-      <div className="paginado-cards">
-        <br />
-        <div className="paginado">
+            <label className="labels">Order by weight:</label>
+            <select
+              className="select-style"
+              onChange={(e) => {
+                handleOrderByWeight(e);
+              }}
+            >
+              <option value="minToMax">Min to Max</option>
+              <option value="maxToMin">Max to Min</option>
+            </select>
+            <button
+              className="btn"
+              onClick={(e) => {
+                handleClick(e);
+              }}
+            >
+              Reset
+            </button>
+          </>
+        </div>
+
+        <div className="paging-container">
           <Paginado
             breedsPerPage={breedsPerPage}
             allBreeds={allBreeds.length}
@@ -158,33 +149,40 @@ export default function Home() {
           />
         </div>
 
-        <br />
-
-        <div className="content-cards">
-          {currentBreeds?.map((el) => {
-            return (
-              <div key={el.id}>
-                <Link className="link" to={"/home/" + el.id}>
-                  <Card
-                    name={el.name}
-                    temperament={el.temperament}
-                    weight={el.weight.metric ? el.weight.metric : el.weight}
-                    life_span={el.life_span}
-                    origin={el.origin}
-                    image={
-                      el.image
-                        ? el.image.url || el.image
-                        : "https://cdn2.thedogapi.com/images/" +
-                          el.reference_image_id +
-                          ".jpg"
-                    }
-                    key={el.id}
-                  />
-                </Link>
+        <div className="right-side">
+          <div className="content-cards">
+            {currentBreeds && allBreeds ? (
+              currentBreeds?.map((el) => {
+                return (
+                  <div key={el.id}>
+                    <Card
+                      name={el.name}
+                      temperament={el.temperament}
+                      height={el.height.metric ? el.height.metric : el.height}
+                      weight={el.weight.metric ? el.weight.metric : el.weight}
+                      life_span={el.life_span}
+                      image={
+                        el.image
+                          ? el.image.url || el.image
+                          : "https://cdn2.thedogapi.com/images/" +
+                            el.reference_image_id +
+                            ".jpg"
+                      }
+                      id={el.id}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div>
+                <h1>LOADING</h1>
               </div>
-            );
-          })}
+            )}
+          </div>
         </div>
+      </div>
+      <div className="paging-container">
+        <Footer />
       </div>
     </div>
   );

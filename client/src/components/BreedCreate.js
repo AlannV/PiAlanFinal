@@ -1,70 +1,83 @@
 import React, { useState, useEffect } from "react";
+import { v4 as randomId } from "uuid";
+
 import { Link, useHistory } from "react-router-dom";
-import { postBreed, getTemperaments } from "../actions/index";
+
 import { useDispatch, useSelector } from "react-redux";
+
+import {
+  postBreed,
+  getTemperaments,
+  startUploadingFiles,
+} from "../actions/index";
+
+import formReq from "./FormReq.js";
 import "./BreedCreate.css";
+import Card from "./Card";
 
-function validateForm(input) {
-  let errors = {};
-  if (!input.name) {
-    errors.name = "El nombre es obligatorio";
-  }
-  if (!input.height) {
-    errors.height =
-      "Campo obligatorio. Deben ser dos numeros con el siguiente formato 'min - max'";
-  }
-  if (!input.weight) {
-    errors.weight =
-      "Campo obligatorio. Deben ser dos numeros con el siguiente formato 'min - max'";
-  }
-  if (!input.life_span) {
-    errors.life_span =
-      "Campo obligatorio. Deben ser dos numeros con el siguiente formato 'min - max'";
-  }
+const requirements = formReq;
 
-  return errors;
-}
+const initialState = requirements.reduce((acc, curr) => {
+  acc[curr.name] = curr.initialState;
+  return acc;
+}, {});
 
-export default function BreedCreate() {
+var value = "";
+var typeOfForm = "";
+
+function BreedCreate(_requirements) {
   const dispatch = useDispatch();
   const history = useHistory();
   const temperaments = useSelector((state) => state.temperaments);
-  const [errors, setErrors] = useState({});
-
   const [input, setInput] = useState({
-    name: "",
-    height: "",
-    weight: "",
-    life_span: "",
-    image: "",
-    temperament: [],
+    ...initialState,
   });
 
-  function handleChange(e) {
-    e.preventDefault();
+  const [img, setImg] = useState({});
+
+  temperaments.map((temp) => {
+    requirements[5].existingOptions.push({
+      value: temp.name,
+      label: temp.name,
+    });
+  });
+
+  const imgCloudinary = useSelector((state) => state.productImg);
+
+  useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
+
+  function handleDelete(name, sel) {
     setInput({
       ...input,
-      [e.target.name]: e.target.value,
+      [name]: input[name].filter((cat) => cat !== sel),
     });
-    console.log(input);
-
-    setErrors(
-      validateForm({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-    console.log(input);
   }
 
-  function handleSelect(e) {
-    setInput({
-      ...input,
-      temperament: [...input.temperament, e.target.value],
-    });
+  function handleChange(e, option, type) {
+    if (type === "text") {
+      setInput({
+        ...input,
+        [option]: e.target.value,
+      });
+    }
+    if (type === "select") {
+      setInput({
+        ...input,
+        [option]: [...input[option], e.target.value],
+      });
+      console.log(input);
+    }
+    if (type === "file") {
+      setImg({ file: URL.createObjectURL(e.target.files[0]) });
+      dispatch(startUploadingFiles(e.target.files));
+    }
   }
 
   function handleSubmit(e) {
+    console.log(input);
+    input.image = imgCloudinary;
     if (
       !input.name ||
       input.name.includes("  ") ||
@@ -88,151 +101,140 @@ export default function BreedCreate() {
       image: "",
       temperament: "",
     });
-    e.target.reset();
     history.push("/home");
   }
 
-  function handleDelete(el) {
-    setInput({
-      ...input,
-      temperament: input.temperament.filter((temp) => temp !== el),
-    });
-  }
+  return input === {} || input === undefined || input === null ? (
+    <div> loading... </div>
+  ) : (
+    <div className={"form-main-container"}>
+      <div className={"form-title-container"}>
+        <h1 className={"form-title"}>Create Your Own Breed</h1>
+      </div>
+      <div className={"form-sub-container"}>
+        <form onSubmit={(e) => handleSubmit(e)} className={"form-syle"}>
+          {requirements.map((req) => {
+            value = req.name;
+            typeOfForm = req.type;
 
-  useEffect(() => {
-    dispatch(getTemperaments());
-  }, [dispatch]);
+            let text = typeOfForm === "text";
+            let number = typeOfForm === "number";
+            let url = typeOfForm === "textUrl";
 
-  return (
-    <div className="breed-main-container">
-      <div className="breed-sub-container">
-        <nav className="breed-nav">
-          <div className="breed-titles">
-            <h1>Ingresa los datos de tu raza:</h1>
-          </div>
-          <Link to="/home">
-            <button className="btn">Volver al inicio</button>
-          </Link>
-        </nav>
+            let select = typeOfForm === "select";
+            let file = typeOfForm === "file";
 
-        <div className="flex-container">
-          <form onSubmit={(e) => handleSubmit(e)} className="form">
-            <div className="form__section">
-              <h4>Nombre:</h4>
-              <input
-                type="text"
-                value={input.name}
-                name="name"
-                required
-                placeholder="Nombre"
-                onChange={(e) => handleChange(e)}
-                className="form__input"
-              />
-              {errors.name && <p>{errors.name}</p>}
-            </div>
-            <div className="form__section">
-              <h4>Altura minima y maxima:</h4>
-              <input
-                type="text"
-                value={input.height}
-                name="height"
-                pattern="[0-9]{1,2}[ ][-][ ][0-9]{1,2}"
-                required
-                title="La altura debe ser la altura minima seguida de: espacio - espacio y la altura maxima"
-                placeholder="Altura... ej: 20 - 35"
-                onChange={(e) => handleChange(e)}
-                className="form__input"
-              />
-              {errors.height && <p>{errors.height}</p>}
-            </div>
+            if (text || number || url) {
+              return (
+                <div key={req.id} className={"text-number-container"}>
+                  <label
+                    htmlFor={req.name}
+                    key={req.id}
+                    className={"label-style"}
+                  >
+                    {req.label + " : "}
+                  </label>
+                  <input
+                    key={req.name}
+                    type={req.type}
+                    value={input.value}
+                    name={req.name}
+                    required={req.required}
+                    placeholder={req.placeholder}
+                    onChange={(e) => handleChange(e, req.name, req.type)}
+                    className={"input-style"}
+                  />
+                </div>
+              );
+            }
 
-            <div className="form__section">
-              <h4>Peso minimo y maximo:</h4>
-              <input
-                type="text"
-                value={input.weight}
-                name="weight"
-                pattern="[0-9]{1,2}[ ][-][ ][0-9]{1,2}"
-                required
-                title="El peso debe ser el peso minimo seguido de: espacio - espacio y el peso maximo"
-                placeholder="Peso... ej: 1 - 95"
-                onChange={(e) => handleChange(e)}
-                className="form__input"
-              />
-              {errors.weight && <p>{errors.weight}</p>}
-            </div>
-
-            <div className="form__section">
-              <h4>Espectativa de vida minima y maxima:</h4>
-              <input
-                type="text"
-                value={input.life_span}
-                name="life_span"
-                pattern="[0-9]{1,2}[ ][-][ ][0-9]{1,2}"
-                required
-                title="Life span must have a maximum value followed by space - space ( - ) and a minimum value"
-                placeholder="Espectativa de vida... ej: 5 - 16"
-                onChange={(e) => handleChange(e)}
-                className="form__input"
-              />
-              {errors.life_span && <p>{errors.life_span}</p>}
-            </div>
-            <div className="form__section">
-              <h4>Link de la imagen:</h4>
-              <input
-                type="text"
-                value={input.image}
-                name="image"
-                placeholder="Imagen... https://..."
-                onChange={(e) => handleChange(e)}
-                className="form__input"
-              />
-            </div>
-
-            <div className="form__section">
-              <h4>Elije uno o mas temperamentos</h4>
-
-              <select
-                onChange={(e) => handleSelect(e)}
-                className="select-style"
-              >
-                {temperaments.map((temp) => {
-                  return (
-                    <option
-                      value={temp.name}
-                      key={temp.name}
-                      className="form__input"
-                    >
-                      {temp.name}
+            if (select) {
+              return (
+                <div key={req.id} className={"select-container"}>
+                  <label
+                    htmlFor={req.prop}
+                    key={randomId}
+                    className={"label-style"}
+                  >
+                    {req.label + " : "}
+                  </label>
+                  <select
+                    required={req.required}
+                    onChange={(e) => handleChange(e, req.name, req.type)}
+                    className="select-style"
+                  >
+                    <option key={0} value={0} className={"select-option"}>
+                      Select {req.label}
                     </option>
-                  );
-                })}
-              </select>
-            </div>
+                    {req.existingOptions
+                      .sort((a, b) => (a < b ? -1 : 1))
+                      .map((option) =>
+                        !input[req.name].includes(option.value) ? (
+                          <option
+                            key={randomId()}
+                            value={option.value}
+                            className={"select-option"}
+                          >
+                            {option.label}
+                          </option>
+                        ) : null
+                      )}
+                  </select>
+                  {input[req.name].map((sel) => (
+                    <div key={sel} className={"select-delete-container"}>
+                      <label htmlFor={sel} className={"select-delete-option"}>
+                        {sel}
+                      </label>
+                      <button
+                        onClick={(e) => handleDelete(req.name, sel)}
+                        className={"select-delete-button"}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
 
-            <div className="delete-container">
-              <ul>
-                {input.temperament.map((el) => (
-                  <div>
-                    {el} {""}
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(el)}
-                    >
-                      <div className="button">X</div>
-                    </button>
-                  </div>
-                ))}
-              </ul>
-            </div>
-
-            <br />
-            <button type="submit" className="btn">
-              Crear raza
-            </button>
-          </form>
-        </div>
+            if (file) {
+              return (
+                <div key={req.id} className={"file-container"}>
+                  <label
+                    htmlFor={req.prop}
+                    key={randomId}
+                    className={"label-style"}
+                  >
+                    {req.label + " : "}
+                  </label>
+                  <input
+                    type="file"
+                    name={req.name}
+                    id={req.name}
+                    onChange={(e) => handleChange(e, req.name, req.type)}
+                    className={"file-input"}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })}
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div>
+        <Card
+          image={img.file}
+          name={input.name}
+          temperament={input.temperament.toString()}
+          weight={input.weight}
+          height={input.height}
+          life_span={input.life_span}
+        />
       </div>
     </div>
   );
 }
+
+export default BreedCreate;

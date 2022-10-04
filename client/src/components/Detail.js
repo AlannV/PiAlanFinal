@@ -7,8 +7,6 @@ import { useParams } from "react-router-dom";
 import "./Detail.css";
 
 export default function Detail(props) {
-  console.log(props);
-
   const dispatch = useDispatch();
 
   const { id } = useParams();

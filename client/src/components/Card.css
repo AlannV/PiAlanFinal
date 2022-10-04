@@ -1,4 +1,4 @@
-*{margin: 0; padding: 0;}
+/* *{margin: 0; padding: 0;}
 
 .card-container{
   margin: 1rem;
@@ -53,4 +53,80 @@
   border: none;
   border-radius: 15px;
 
+} */
+
+.img-card-styles {
+  border: none;
+  border-radius: 0.5rem;
+  width: 270px;
+  height: 220px;
+  padding-bottom: 0.1rem;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+
+.card-container {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.card {
+  margin-top: 0.5rem;
+  height: 250px;
+  width: 280px;
+  position: relative;
+  border-radius: 0.5rem;
+  user-select: none;
+}
+
+.card-front,
+.card-back {
+  border: solid 1px green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  height: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  transition: transform 0.5s ease;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.card-back {
+  transform: perspective(1000px) rotateY(180deg);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card-back.flipped {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.card-back.flipped:hover{
+  transform: scale(1.1,1.1)
+}
+
+.card-front {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.card-front:hover{
+  background-color: rgba(255, 255, 255, 0.8);
+transform: scale(1.1, 1.1);
+}
+
+.card-front.flipped {
+  transform: perspective(1000px) rotateY(-180deg);
 }
