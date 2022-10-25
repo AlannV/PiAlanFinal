@@ -24,6 +24,7 @@ export default function Detail(props) {
         {breedDetails.length ? (
           <div className="card-container-detail">
             <div className="img-detail-container">
+              <h2 className="data-breed-name">{breedDetails[0].name}</h2>
               <img
                 className="img-styles"
                 height="200px"
@@ -33,18 +34,41 @@ export default function Detail(props) {
               />
             </div>
             <div className="data-breed-detail">
-              <h2>{breedDetails[0].name}</h2>
-              <h3>Height: {breedDetails[0].height.metric} cm</h3>
-              <h3>Weight: {breedDetails[0].weight.metric} kg</h3>
-              <h3>Life Span: {breedDetails[0].life_span}</h3>
-              <h4>Breed Group: {breedDetails[0].breed_group}</h4>
-              <h4>Origin: {breedDetails[0].origin} </h4>
-              <h4>Temperaments: {breedDetails[0].temperament}</h4>
+              <h4 className="data-breed-data">
+                Height: {breedDetails[0].height.metric} cm
+              </h4>
+              <h4 className="data-breed-data">
+                Weight: {breedDetails[0].weight.metric} kg
+              </h4>
+              <h4 className="data-breed-data">
+                Life Span: {breedDetails[0].life_span}
+              </h4>
+              {breedDetails[0].breed_group && (
+                <h4 className="data-breed-data">
+                  Breed Group: {breedDetails[0].breed_group}
+                </h4>
+              )}{" "}
+              {breedDetails[0].origin && (
+                <h4 className="data-breed-data">
+                  Origin: {breedDetails[0].origin}{" "}
+                </h4>
+              )}
+              {breedDetails[0].bredfor && <h4>{breedDetails[0].bredfor}</h4>}{" "}
+              {breedDetails[0].bred_for && (
+                <h4 className="data-breed-data">
+                  Bred For: {breedDetails[0].bred_for}
+                </h4>
+              )}
+              <h4 className="data-breed-data">
+                Temperaments: {breedDetails[0].temperament}
+              </h4>
             </div>
           </div>
         ) : (
           <div className="card-container-detail">
             <div className="img-detail-container">
+              <h2 className="data-breed-name">{breedDetails.name}</h2>
+
               <img
                 className="img-styles"
                 height="200px"
@@ -55,11 +79,16 @@ export default function Detail(props) {
             </div>
             <div className="data-breed-detail">
               {console.log(breedDetails)}
-              <h2>{breedDetails.name}</h2>
-              <h3>Height: {breedDetails.height} cm</h3>
-              <h3>Weight: {breedDetails.weight} kg</h3>
-              <h3>Life Span: {breedDetails.life_span} años</h3>
-              <h4>
+              <h4 className="data-breed-data">
+                Height: {breedDetails.height} cm
+              </h4>
+              <h4 className="data-breed-data">
+                Weight: {breedDetails.weight} kg
+              </h4>
+              <h4 className="data-breed-data">
+                Life Span: {breedDetails.life_span} años
+              </h4>
+              <h4 className="data-breed-data">
                 Temperaments:
                 {breedDetails.temperaments &&
                   breedDetails.temperaments.map((el) => el.name).join(", ")}
@@ -67,7 +96,6 @@ export default function Detail(props) {
             </div>
           </div>
         )}
-        <br />
         <Link to="/home">
           <button className="reset-btn">Back</button>
         </Link>

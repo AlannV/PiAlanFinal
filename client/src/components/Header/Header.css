@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255,255,255,0.1);
   width: 70vw;
   flex-direction: column;
   
@@ -36,12 +35,13 @@
 }
 
 .create-breed-btn {
-  margin: 0.1rem;
+  margin-right: 0.5rem;
   width: 9rem;
   height: 2.2rem;
   border: solid 1px green;
   border-radius: 0.2rem;
   background-color: rgba(255, 255, 255, 0.5);
+
 }
 
 .create-breed-btn:hover {

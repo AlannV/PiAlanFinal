@@ -1,8 +1,15 @@
 import React from "react";
 import "./Paginado.css";
 
-export default function Paginado({ breedsPerPage, allBreeds, paginado }) {
+export default function Paginado({
+  breedsPerPage,
+  allBreeds,
+  paginado,
+  currentPage,
+}) {
   const pageNumbers = [];
+
+  let style = "small-btn";
 
   for (let i = 1; i <= Math.ceil(allBreeds / breedsPerPage); i++) {
     pageNumbers.push(i);
@@ -15,7 +22,7 @@ export default function Paginado({ breedsPerPage, allBreeds, paginado }) {
             <button
               onClick={() => paginado(number)}
               key={number}
-              className="small-btn"
+              className={style}
             >
               {number}
             </button>
