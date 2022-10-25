@@ -10,6 +10,7 @@ export default function Card({
   life_span,
   image,
   id,
+  buttonVisibility = true,
 }) {
   const [front, setFront] = useState("card-front");
 
@@ -44,9 +45,11 @@ export default function Card({
           <p className="card-titles">Weight: {weight} kg</p>
           <p className="card-titles">Height: {height}</p>
           <p className="card-titles">Life Span: {life_span}</p>
-          <Link to={"/home/" + id}>
-            <button>View More!</button>
-          </Link>
+          {buttonVisibility ? (
+            <Link to={"/home/" + id}>
+              <button>View More!</button>
+            </Link>
+          ) : null}
         </div>
       </div>
     </div>

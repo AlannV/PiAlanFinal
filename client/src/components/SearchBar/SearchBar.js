@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getBreedsByName } from "../actions";
+import { getBreedsByName } from "../../actions/index";
 import "./SearchBar.css";
 
 export default function SearchBar({ setCurrentPage }) {

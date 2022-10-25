@@ -7,13 +7,13 @@ import {
   getTemperaments,
   orderByBreed,
   orderByWeight,
-} from "../actions";
-import Card from "./Card";
-import Paginado from "./Paginado";
+} from "../../actions";
+import Card from "../Card/Card";
+import Paginado from "../Paginado/Paginado";
 import "./Home.css";
-import Footer from "./Footer";
-import Header from "./Header";
-import SearchBar from "./SearchBar";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import SearchBar from "../SearchBar/SearchBar";
 
 import { Link } from "react-router-dom";
 

@@ -10,11 +10,11 @@ import {
   getTemperaments,
   startUploadingFiles,
   getBreeds,
-} from "../actions/index";
+} from "../../actions/index";
 
-import formReq from "./FormReq.js";
+import formReq from "../FormReq.js";
 import "./BreedCreate.css";
-import Card from "./Card";
+import Card from "../Card/Card";
 
 const requirements = formReq;
 
@@ -235,6 +235,7 @@ function BreedCreate(_requirements) {
           weight={input.weight}
           height={input.height}
           life_span={input.life_span}
+          buttonVisibility={false}
         />
       </div>
       <Link to="/home">

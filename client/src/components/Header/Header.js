@@ -1,6 +1,6 @@
 import React from "react";
 
-import logo from "./images/dobbie-logo.png";
+import logo from "../images/dobbie-logo.png";
 
 import "./Header.css";
 
