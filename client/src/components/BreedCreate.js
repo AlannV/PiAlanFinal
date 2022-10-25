@@ -9,6 +9,7 @@ import {
   postBreed,
   getTemperaments,
   startUploadingFiles,
+  getBreeds,
 } from "../actions/index";
 
 import formReq from "./FormReq.js";
@@ -91,7 +92,6 @@ function BreedCreate(_requirements) {
     e.preventDefault();
 
     dispatch(postBreed(input));
-    alert("Raza creada correctamente!");
 
     setInput({
       name: "",
@@ -101,13 +101,15 @@ function BreedCreate(_requirements) {
       image: "",
       temperament: "",
     });
+
+    dispatch(getBreeds());
     history.push("/home");
   }
 
   return input === {} || input === undefined || input === null ? (
     <div> loading... </div>
   ) : (
-    <div className={"form-main-container"}>
+    <div className={"home-main-container"}>
       <div className={"form-title-container"}>
         <h1 className={"form-title"}>Create Your Own Breed</h1>
       </div>
@@ -220,7 +222,9 @@ function BreedCreate(_requirements) {
             return null;
           })}
           <br />
-          <button type="submit">Submit</button>
+          <button type="submit" className="reset-btn">
+            Submit
+          </button>
         </form>
       </div>
       <div>
@@ -233,6 +237,9 @@ function BreedCreate(_requirements) {
           life_span={input.life_span}
         />
       </div>
+      <Link to="/home">
+        <button className={"reset-btn"}>Back</button>
+      </Link>
     </div>
   );
 }

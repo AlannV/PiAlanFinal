@@ -20,6 +20,7 @@ function addBreed(request, response, next) {
     life_span,
     createdInDb,
     image,
+    temperament,
     id,
   });
 
@@ -95,7 +96,15 @@ function getById(request, response, next) {
       })
       .catch((err) => next(err));
   } else {
-    Breed.findByPk(id)
+    Breed.findByPk(id, {
+      include: {
+        model: Temperament,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    })
       .then((b) => {
         response.send(b);
       })

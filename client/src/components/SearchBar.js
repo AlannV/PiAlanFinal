@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getBreedsByName } from "../actions";
 import "./SearchBar.css";
 
-export default function SearchBar() {
+export default function SearchBar({ setCurrentPage }) {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -12,11 +12,11 @@ export default function SearchBar() {
   function handleInputChange(e) {
     e.preventDefault();
     setName(e.target.value);
-    console.log(name);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    setCurrentPage(1);
     dispatch(getBreedsByName(name));
   }
 
@@ -27,6 +27,11 @@ export default function SearchBar() {
         placeholder="Search..."
         onChange={(e) => handleInputChange(e)}
         className="inputSearch"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSubmit(e);
+          }
+        }}
       />
       <button
         className="search-btn"

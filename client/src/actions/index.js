@@ -8,6 +8,7 @@ import {
   GET_BREEDS_BY_NAME,
   FILTER_CREATED_DB,
   GET_DETAILS,
+  CLEAR_DETAIL,
   ORDER_BY_BREED,
   ORDER_BY_WEIGHT,
 } from "../entorno.js";
@@ -87,6 +88,7 @@ export function getDetail(id) {
   return async function (dispatch) {
     try {
       var json = await axios.get(`${BREEDS_LOCAL_URL}` + id);
+      console.log(json.data);
       return dispatch({
         type: GET_DETAILS,
         payload: json.data,
@@ -95,6 +97,10 @@ export function getDetail(id) {
       console.log(error);
     }
   };
+}
+
+export function clearDetail() {
+  return { type: CLEAR_DETAIL };
 }
 
 const fileUpload = async (file) => {

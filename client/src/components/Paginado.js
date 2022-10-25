@@ -9,7 +9,7 @@ export default function Paginado({ breedsPerPage, allBreeds, paginado }) {
   }
   return (
     <nav className="paginado">
-      <ul>
+      <ul className="btn-container">
         {pageNumbers?.map((number) => {
           return (
             <button

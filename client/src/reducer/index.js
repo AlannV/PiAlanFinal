@@ -8,6 +8,7 @@ import {
   POST_BREED,
   GET_DETAILS,
   ORDER_BY_WEIGHT,
+  CLEAR_DETAIL,
 } from "../entorno.js";
 
 const initialState = {
@@ -43,6 +44,11 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         detail: action.payload,
+      };
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        detail: [],
       };
     case FILTER_BY_TEMPERAMENT:
       const breedsFiltered = state.allBreeds;

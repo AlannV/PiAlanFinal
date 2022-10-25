@@ -37,6 +37,7 @@ a {
 }
 
 .upper-side{
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,3 +80,21 @@ select{
   height: 2rem;
 }
 
+.reset-btn {
+  margin: 0.1rem;
+  width: 3.5rem;
+  height: 2.2rem;
+  border: solid 1px green;
+  border-radius: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.reset-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.1, 1.1);
+}
+
+.reset-btn:active {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1, 1);
+}
